@@ -1,0 +1,14 @@
+.ant-card-cover {
+    width: 240px;
+    height: 180px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.gutter-row {
+}
+
+.card-out :hover{
+    background-color: cornsilk;
+}

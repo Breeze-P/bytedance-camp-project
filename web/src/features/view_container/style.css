@@ -1,0 +1,70 @@
+@font-face {
+    font-family: myFont;
+    src: url("ZCOOLXiaoWei-Regular.ttf");
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.logo {
+    display: flex;
+    padding: 10px;
+    background: orange;
+    justify-content: center;
+}
+
+.ant-layout-header {
+    line-height: 0;
+}
+
+.site-layout-background {
+    text-align: center;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    font-family: myFont, serif;
+}
+
+.menu {
+    font-family: myFont, serif;
+}
+
+.header-title {
+    font-size: 20px;
+    flex: 4 1;
+}
+
+.content-container {
+    margin: 16px 0;
+    min-height: 360px;
+}
+
+.header-left {
+    box-sizing: border-box;
+    width: 100px;
+    border-width: 0;
+    background-color: white;
+}
+
+.header-right {
+    box-sizing: border-box;
+    width: 100px;
+    border-width: 0;
+    background-color: white;
+}
+
+.cover-black {
+    height:100%;
+    width:100%;
+    border: 1px solid green;
+    position:fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align:center;
+    z-index: 50;
+}
