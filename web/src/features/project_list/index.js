@@ -15,7 +15,7 @@ const ProjectList = (props) => {
         <Col className="gutter-row" span={6} key={index} >
             <Link to={`/page/${item.id}`} className="card-out">
                 <Card className="project-card" bordered={false} title={item.name}
-                      cover={<img className="card-icon" alt="项目图片" src="test.png" />}>
+                      cover={<img className="card-icon" alt="项目图片" src="https://avatars.githubusercontent.com/u/85940882?v=4" />}>
                     <Meta title={item.desc} description={new Date(item.createdAt).toLocaleDateString()} />
                 </Card>
             </Link>
