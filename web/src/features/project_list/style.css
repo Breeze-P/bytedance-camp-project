@@ -1,12 +1,16 @@
 .ant-card-cover {
-    width: 240px;
-    height: 180px;
-    padding: 0 10px;
+    width: 100%;
+    height: 300px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .gutter-row {
+}
+
+.card-icon {
+    max-width: 200px;
 }
 
 .card-out :hover{

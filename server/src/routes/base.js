@@ -25,15 +25,17 @@ baseRoute.get('/', async function (ctx) {
 });
 
 baseRoute.post('/', async function(ctx, next) {
-    console.log(1);
+    console.log('post online');
     const payload = ctx.request.body;
-    console.log(payload);
-    const id = await new BaseController().createBase(payload);
+
+    const result = await fetch("https://qc9rmq.fn.thelarkcloud.com/insertProject",
+        {method: 'POST', headers: {'content-type': 'application/json'}, body: payload})
     ctx.body = {
-        data: id,
+        data: result._id,
         message: 'ok'
     };
-    return ctx.body = "上传成功！";
+
+    return ctx.body;
 });
 
 

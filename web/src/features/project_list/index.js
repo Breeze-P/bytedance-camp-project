@@ -11,11 +11,15 @@ const ProjectList = (props) => {
 
     const rowNumber = (!projects) ? 0 : (Math.ceil( projects.length / 4));
 
+    if (projects.length) {
+        // console.log(projects[0].icon);
+    }
+
     const projectsCols = (!projects) ? null : projects.map((item, index) =>
         <Col className="gutter-row" span={6} key={index} >
             <Link to={`/page/${item.id}`} className="card-out">
                 <Card className="project-card" bordered={false} title={item.name}
-                      cover={<img className="card-icon" alt="项目图片" src="https://avatars.githubusercontent.com/u/85940882?v=4" />}>
+                      cover={<img className="card-icon" alt="项目图片" src={item.icon} />}>
                     <Meta title={item.desc} description={new Date(item.createdAt).toLocaleDateString()} />
                 </Card>
             </Link>

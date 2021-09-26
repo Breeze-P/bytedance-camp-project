@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import './style.css';
-import {Button, Layout, PageHeader} from 'antd';
+import {Layout} from 'antd';
 import ProjectList from "../project_list";
 import AddProjectForm from "./compontents/add_project_form";
 import Page from "../page/index"
@@ -18,6 +18,7 @@ const ViewContainer = () => {
     const [ projects, setProjects ] = useState([]);
     const [ timeFlag, setTimeFlag ] = useState(false);
     const [ alertFlag, setAlertFlag ] = useState(false);
+    const [ reload, setReload ] = useState(false);
 
     useEffect(() => {
         fetch("http://localhost:3000/api/base").then(
@@ -31,20 +32,20 @@ const ViewContainer = () => {
         ).catch((e) => {
             console.log(e);
         });
-    }, []);
+    }, [reload]);
 
     const sortTimeByTime = () => {
         let tempProjects = projects;
         if (!timeFlag) {
             tempProjects = tempProjects.sort((a, b) => {
-                const aTime = new Date(a.createdAt);
-                const bTime = new Date(b.createdAt);
+                const aTime = new Date(a.updatedAt);
+                const bTime = new Date(b.updatedAt);
                 return aTime.getTime() - bTime.getTime();
             });
             setProjects(tempProjects);
             setTimeFlag(true);
         } else {
-            tempProjects = tempProjects.sort((a, b) => Number(a.id) - Number(b.id));
+            tempProjects = tempProjects.sort((a, b) => Number(a._id) - Number(b._id));
             setProjects(tempProjects);
             setTimeFlag(false);
         }
@@ -56,6 +57,10 @@ const ViewContainer = () => {
         } else {
             setAlertFlag(false);
         }
+    }
+
+    const replaceLoad = () => {
+        setReload(!reload);
     }
 
     return(
@@ -92,7 +97,7 @@ const ViewContainer = () => {
                                 </button>
                             </Header>
                             {(!alertFlag) ? null:
-                                <AddProjectForm onSubmit={addProjectForm}/>
+                                <AddProjectForm onSubmit={addProjectForm} replaceLoad={replaceLoad}/>
                             }
                             <Content className="site-layout-background content-container">
                                 <ProjectList projects={projects} />

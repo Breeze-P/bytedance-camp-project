@@ -21,9 +21,9 @@ const InputDesc = (props) => {
 
 const AddProjectForm = (props) => {
     const [form] = Form.useForm();
-    const { onSubmit } = props;
+    const { onSubmit, replaceLoad } = props;
     const [ projectNameValue, setProjectNameValue ] = useState('');
-    // const [ iconLinkValue, setIconLinkValue ] = useState('');
+    const [ iconLinkValue, setIconLinkValue ] = useState('');
     const [ descValue, setDescValue ] = useState('');
 
     const postData = (values, url) => {
@@ -35,7 +35,7 @@ const AddProjectForm = (props) => {
     }
 
     const addProject = (values) => {
-        const httpRequest = postData(values, 'http://localhost:3000/api/base');
+        const httpRequest = postData(values, 'http://localhost:3000/api/base/post');
 
         httpRequest.onreadystatechange = function () {
             if (httpRequest.readyState === 4 && httpRequest.status === 200) {
@@ -44,31 +44,22 @@ const AddProjectForm = (props) => {
                 console.log('失败')
             }
         };
-
-        console.log(httpRequest);
     }
 
     const onFinish = (values) => {
-        // const data = {
-        //     name: projectNameValue,
-        //     desc: descValue
-        // }
-        // const json = JSON.stringify(data);
+        const data = {
+            name: projectNameValue,
+            desc: descValue,
+            icon: iconLinkValue
+        }
 
-        // const httpRequest = new XMLHttpRequest();
-        // httpRequest.open('POST', "http://192.168.31.179:3000/api/base", true);
-        // httpRequest.setRequestHeader("Content-type", "application/json");
-        // httpRequest.send(json);
-        // console.log("over");
-        //
-        // httpRequest.onreadystatechange = () => {
-        //     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        //         console.log("项目上传成功！");
-        //     } else {
-        //         console.log("项目上传失败！");
-        //     }
-        // };
-        // fetch('http://localhost:8080/api/base', {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify(data)})
+        fetch('https://qc9rmq.fn.thelarkcloud.com/insertProject', {method: 'POST', headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}).then( res => {
+            if (res.status === 200) {
+                replaceLoad();
+            }
+        } ).catch(e => {
+            console.log(e)
+        });
 
         addProject(values);
         onCancel();
@@ -76,10 +67,6 @@ const AddProjectForm = (props) => {
 
     const onCancel = () => {
         onSubmit();
-        // form.resetFields();
-        // setProjectNameValue('');
-        // // setIconLinkValue('');
-        // setDescValue('');
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -89,8 +76,8 @@ const AddProjectForm = (props) => {
     const onProjectChange = (e) => {
         setProjectNameValue(e.target.value);
     }
-    const onIconChange = (info) => {
-        // setIconLinkValue(info.file.originFileObj);
+    const onIconChange = (url) => {
+        setIconLinkValue(url);
     }
     const onDescChange = (e) => {
         setDescValue(e.target.value);

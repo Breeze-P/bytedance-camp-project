@@ -33,8 +33,8 @@ class ImageUpload extends React.Component {
         if (info.file.status === 'done') {
             // Get this url from response in real world.
             getBase64(info.file.originFileObj, imageUrl => {
-                console.log(imageUrl)
-                this.props.onChange(info)
+                // console.log(imageUrl)
+                this.props.onChange(imageUrl);
                 return this.setState({
                     imageUrl,
                     loading: false,

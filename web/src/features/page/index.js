@@ -209,6 +209,8 @@ const Page = () => {
                     innerRadius: 36,
                     outerRadius: 108,}]);
                 break;
+            default:
+                break;
         }
         setCurrent(null);
     };
@@ -250,6 +252,9 @@ const Page = () => {
                 break;
             case 'shadowOpacity':
                 handleShapeChange({...curShape, shadowOpacity: value});
+                break;
+            default:
+                break;
         }
     }
 
