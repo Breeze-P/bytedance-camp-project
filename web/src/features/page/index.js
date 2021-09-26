@@ -1,10 +1,11 @@
 import React,  { useState } from 'react';
-import {Stage, Layer, Rect, Circle, Line, Star, Transformer, Label} from 'react-konva';
+import {Stage, Layer, Rect, Circle, Line, Star, Transformer} from 'react-konva';
 import { Layout, Menu, Divider, Input, Row, Col, Button, Popover } from "antd";
-import {AppstoreOutlined, BgColorsOutlined, FileOutlined, SmileOutlined, TableOutlined} from '@ant-design/icons';
+import {AppstoreOutlined, BgColorsOutlined, RollbackOutlined, SmileOutlined, TableOutlined} from '@ant-design/icons';
 import { ChromePicker } from 'react-color'
 import 'antd/dist/antd.css';
 import './style.css';
+import {Link} from "react-router-dom";
 
 const { Sider, Content, Footer } = Layout;
 const { SubMenu } = Menu;
@@ -39,7 +40,7 @@ const ShapeItem = ({ shapeProps, isSelected, onSelect, onChange }) => {
                 onTap={onSelect}
                 ref={shapeRef}
                 {...shapeProps}
-                draggable
+                draggable={isSelected}
                 onDragEnd={(e) => {
                     onChange({
                         ...shapeProps,
@@ -140,7 +141,7 @@ const initialShapes = [
         height: 100,
         fill: 'yellow',
         stroke: 'black',
-        strokeWidth: 0,
+        strokeWidth: 1,
         shadowColor: 'black',
         shadowOffsetX: 0,
         shadowOffsetY: 0,
@@ -230,7 +231,6 @@ const Page = () => {
     const handleInputChange = (e) => {
         const name = e.target.name;
         const value = e.target.value
-        console.log(name);
         switch (name) {
             case 'x':
                 handleShapeChange({...curShape, x: value});
@@ -243,6 +243,9 @@ const Page = () => {
                 break;
             case 'height':
                 handleShapeChange({...curShape, height: value});
+                break;
+            case 'strokeWidth':
+                handleShapeChange({...curShape, strokeWidth: value});
                 break;
             case 'shadowOffset-x':
                 handleShapeChange({...curShape, shadowOffsetX: value});
@@ -304,7 +307,7 @@ const Page = () => {
                 </div>
             </div>
             <Divider style={{ width: 120 , margin: 10 }} />
-            <div className="shape-info stork" >
+            <div className="shape-info stroke" >
                 边框
                 <div className="color-wrap">
                     <Popover placement="bottomLeft" title="Color Picker"
@@ -315,9 +318,9 @@ const Page = () => {
                         {`Hex: ${shapes[Number(selectedId)].stroke}`}
                     </div>
                 </div>
-                <div className="stork-wrap">
-                    <Label >宽度</Label>
-                    <Input name="strokeWidth" className="stork-width" size="small" value={curShape.strokeWidth} onChange={handleInputChange}/>
+                <div className="stroke-wrap">
+                    <label >宽度</label>
+                    <Input name="strokeWidth" className="stroke-width" size="small" value={curShape.strokeWidth} onChange={handleInputChange}/>
                 </div>
             </div>
             <Divider style={{ width: 120 , margin: 10 }} />
@@ -335,7 +338,7 @@ const Page = () => {
                 <div className="shadow-input">
                     <Input name={'shadowOffset-x'} className="left-item input-item" size="small" suffix={'X'} value={curShape.shadowOffsetX} onChange={handleInputChange} />
                     <Input name={'shadowOffset-y'} className="input-item" size="small" suffix={'Y'} value={curShape.shadowOffsetY} onChange={handleInputChange} />
-                    <Input name={'shadowOpacity'} className="input-item" size="small" suffix={<TableOutlined />} value={curShape.shadowOpacity} onChange={handleInputChange} />
+                    <Input name={'shadowOpacity'} className="input-item opacity" size="small" suffix={<TableOutlined />} value={curShape.shadowOpacity} onChange={handleInputChange} />
                 </div>
             </div>
         </div> :
@@ -350,8 +353,10 @@ const Page = () => {
         <Layout style={{ minHeight: '100vh' }}>
             <Layout className="site-layout">
                 <Menu className='menu' onClick={handleMenuClicked} selectedKeys={[current]} mode="horizontal">
-                    <Menu.Item key="file" disabled icon={<FileOutlined />}>
-                        文件
+                    <Menu.Item key="file" icon={<RollbackOutlined />}>
+                        <Link to={'/'}>
+                            Go Back
+                        </Link>
                     </Menu.Item>
                     <SubMenu key="SubMenu" icon={<AppstoreOutlined />} title="置入">
                         <Menu.Item key="rect">矩形</Menu.Item>
@@ -364,7 +369,7 @@ const Page = () => {
                         帮助
                     </Menu.Item>
                     <Menu.Item key="alipay">
-                        <a href="https://github.com/meituan-fe-university-practice/prototype-project-2" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/Breeze-P/bytedance-camp-project" target="_blank" rel="noopener noreferrer">
                             Github Link
                         </a>
                     </Menu.Item>

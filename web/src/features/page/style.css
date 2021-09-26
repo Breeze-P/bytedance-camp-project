@@ -37,7 +37,7 @@
     align-items: center;
 }
 
-.stork-width {
+.stroke-width {
     margin-left: 27px;
     width: 60px;
 }
@@ -48,7 +48,7 @@
     width: 50px;
 }
 
-.stork-wrap {
+.stroke-wrap {
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -58,4 +58,8 @@
 .shadow-input {
     display: flex;
     align-items: center;
+}
+
+.opacity {
+    width: 60px;
 }

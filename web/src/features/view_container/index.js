@@ -40,12 +40,16 @@ const ViewContainer = () => {
             tempProjects = tempProjects.sort((a, b) => {
                 const aTime = new Date(a.updatedAt);
                 const bTime = new Date(b.updatedAt);
-                return aTime.getTime() - bTime.getTime();
+                return bTime.getTime() - aTime.getTime();
             });
             setProjects(tempProjects);
             setTimeFlag(true);
         } else {
-            tempProjects = tempProjects.sort((a, b) => Number(a._id) - Number(b._id));
+            tempProjects = tempProjects.sort((a, b) => {
+                const aTime = new Date(a.createdAt);
+                const bTime = new Date(b.createdAt);
+                return aTime.getTime() - bTime.getTime();
+            });
             setProjects(tempProjects);
             setTimeFlag(false);
         }

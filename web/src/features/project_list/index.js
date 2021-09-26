@@ -17,7 +17,7 @@ const ProjectList = (props) => {
 
     const projectsCols = (!projects) ? null : projects.map((item, index) =>
         <Col className="gutter-row" span={6} key={index} >
-            <Link to={`/page/${item.id}`} className="card-out">
+            <Link to={`/page/${item._id}`} className="card-out">
                 <Card className="project-card" bordered={false} title={item.name}
                       cover={<img className="card-icon" alt="项目图片" src={item.icon} />}>
                     <Meta title={item.desc} description={new Date(item.createdAt).toLocaleDateString()} />
