@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import {Stage, Layer, Rect, Circle, Line, Star, Transformer} from 'react-konva';
 import { Layout, Menu, Divider, Input, Row, Col, Button, Popover } from "antd";
