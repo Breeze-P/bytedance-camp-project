@@ -1,4 +1,5 @@
-import React,  { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import { useParams } from "react-router-dom";
 import {Stage, Layer, Rect, Circle, Line, Star, Transformer} from 'react-konva';
 import { Layout, Menu, Divider, Input, Row, Col, Button, Popover } from "antd";
 import {AppstoreOutlined, BgColorsOutlined, RollbackOutlined, SmileOutlined, TableOutlined} from '@ant-design/icons';
@@ -158,8 +159,39 @@ const Page = () => {
     const [selectedId, selectShape] = useState(null);
     const [current, setCurrent] = useState(null);
     const [siderCurrent, setSiderCurrent] = useState(null);
+    let { id } = useParams();
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/api/base/page?id=${id}`).then(
+            res => {
+                return res.json();
+            }
+        ).then(
+            data => {
+                console.log(data);
+                setShapes(data.data);
+            }
+        ).catch((e) => {
+            console.log(e);
+        });
+    }, []);
 
     const curShape = shapes[Number(selectedId)];
+
+    const savePage = () => {
+        const data = {
+            id: id,
+            page: shapes
+        }
+
+        fetch('https://qc9rmq.fn.thelarkcloud.com/insertPage', {method: 'POST', headers: {'Content-type': 'application/json'}, body: JSON.stringify(data)}).then( res => {
+            if (res.status === 200) {
+                console.log('上传成功')
+            }
+        } ).catch(e => {
+            console.log(e)
+        });
+    }
 
     const handleShapeChange = (newAttrs) => {
         if (selectedId) {
@@ -353,7 +385,7 @@ const Page = () => {
         <Layout style={{ minHeight: '100vh' }}>
             <Layout className="site-layout">
                 <Menu className='menu' onClick={handleMenuClicked} selectedKeys={[current]} mode="horizontal">
-                    <Menu.Item key="file" icon={<RollbackOutlined />}>
+                    <Menu.Item key="file" icon={<RollbackOutlined />} onClick={savePage}>
                         <Link to={'/'}>
                             Go Back
                         </Link>
