@@ -38,41 +38,6 @@ baseRoute.post('/', async function(ctx, next) {
     return ctx.body;
 });
 
-baseRoute.get('/page', async function (ctx) {
-    const data = await fetch("https://qc9rmq.fn.thelarkcloud.com/getPage").then(
-        res => res.json()
-    ).then(
-        data => data.pageItem
-    ).catch((e) => {
-        console.log(e);
-    });
-
-    ctx.set("Content-Type","application/json");
-    console.log(data);
-    ctx.body = {
-        data,
-        message: 'ok'
-    };
-    ctx.body=JSON.stringify(ctx.body);
-});
-
-
-baseRoute.put('/:id', async function(ctx) {
-    const id = Number(ctx.params.id);
-    const payload = ctx.request.body;
-    if (isNaN(id)) {
-        ctx.statusCode = 400;
-        ctx.body = {
-            message: 'id must be number',
-        };
-    } else {
-        await new BaseController().updateBase(id, payload);
-        ctx.body = {
-            message: 'ok'
-        }
-    }
-});
-
 baseRoute.delete('/:id', async function(ctx) {
     const id = Number(ctx.params.id);
     if (isNaN(id)) {

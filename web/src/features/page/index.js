@@ -161,21 +161,6 @@ const Page = () => {
     const [siderCurrent, setSiderCurrent] = useState(null);
     let { id } = useParams();
 
-    useEffect(() => {
-        fetch(`http://localhost:3000/api/base/page?id=${id}`).then(
-            res => {
-                return res.json();
-            }
-        ).then(
-            data => {
-                console.log(data);
-                setShapes(data.data);
-            }
-        ).catch((e) => {
-            console.log(e);
-        });
-    }, []);
-
     const curShape = shapes[Number(selectedId)];
 
     const savePage = () => {
