@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import {Stage, Layer, Rect, Circle, Line, Star, Transformer} from 'react-konva';
 import { Layout, Menu, Divider, Input, Row, Col, Button, Popover } from "antd";
-import {AppstoreOutlined, BgColorsOutlined, RollbackOutlined, SmileOutlined, TableOutlined} from '@ant-design/icons';
+import {
+    AppstoreOutlined,
+    BgColorsOutlined,
+    LogoutOutlined,
+    RollbackOutlined,
+    SmileOutlined,
+    TableOutlined
+} from '@ant-design/icons';
 import { ChromePicker } from 'react-color'
 import 'antd/dist/antd.css';
 import './style.css';
@@ -159,7 +166,10 @@ const Page = () => {
     const [selectedId, selectShape] = useState(null);
     const [current, setCurrent] = useState(null);
     const [siderCurrent, setSiderCurrent] = useState(null);
+    const [outPut, setOutPut] = useState(false);
     let { id } = useParams();
+
+    const strShapes = JSON.stringify(shapes);
 
     const curShape = shapes[Number(selectedId)];
 
@@ -227,6 +237,9 @@ const Page = () => {
                     innerRadius: 36,
                     outerRadius: 108,}]);
                 break;
+            case 'output':
+                setOutPut(!outPut);
+                break;
             default:
                 break;
         }
@@ -276,6 +289,10 @@ const Page = () => {
             default:
                 break;
         }
+    }
+
+    const handleCancel = () => {
+        setOutPut(false);
     }
 
     const handleStrokeColor = (color) => {
@@ -368,6 +385,30 @@ const Page = () => {
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
+            {(!outPut) ? null:
+                <div className="cover-black" />
+            }
+            {(!outPut) ? null:
+                <div className="output-wrap" >
+                    <div className="output-main">
+                        <div className="output-header">
+                            <span className="output-title">⭐ 代码查看</span>
+                            <span aria-label="Close" className="byte-modal__headerbtn" onClick={handleCancel}>
+                                <i className="byte-icon byte-icon--close">
+                                    <svg className="icon" viewBox="0 0 1024 1024" version="1.1"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+            d="M512 448l288-288c6.4-6.4 19.2-6.4 32 0l25.6 32c6.4 6.4 6.4 19.2 0 32L569.6 505.6l288 288c6.4 6.4 6.4 19.2 0 32l-32 32c-6.4 6.4-19.2 6.4-32 0L512 569.6l-288 288c-6.4 6.4-19.2 6.4-32 0l-32-32c-6.4-6.4-6.4-19.2 0-32L448 505.6 160 224c-6.4-12.8-6.4-25.6 0-32l32-32c6.4-6.4 19.2-6.4 32 0L512 448z"/>
+                                        <path
+            d="M512 448l288-288c6.4-6.4 19.2-6.4 32 0l25.6 32c6.4 6.4 6.4 19.2 0 32L569.6 505.6l288 288c6.4 6.4 6.4 19.2 0 32l-32 32c-6.4 6.4-19.2 6.4-32 0L512 569.6l-288 288c-6.4 6.4-19.2 6.4-32 0l-32-32c-6.4-6.4-6.4-19.2 0-32L448 505.6 160 224c-6.4-12.8-6.4-25.6 0-32l32-32c6.4-6.4 19.2-6.4 32 0L512 448z"/>
+                                    </svg>
+                                </i>
+                            </span>
+                        </div>
+                        {strShapes}
+                    </div>
+                </div>
+            }
             <Layout className="site-layout">
                 <Menu className='menu' onClick={handleMenuClicked} selectedKeys={[current]} mode="horizontal">
                     <Menu.Item key="file" icon={<RollbackOutlined />} onClick={savePage}>
@@ -389,6 +430,9 @@ const Page = () => {
                         <a href="https://github.com/Breeze-P/bytedance-camp-project" target="_blank" rel="noopener noreferrer">
                             Github Link
                         </a>
+                    </Menu.Item>
+                    <Menu.Item key="output" icon={<LogoutOutlined />}>
+                        导出
                     </Menu.Item>
                 </Menu>
                 <Layout>
